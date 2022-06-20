@@ -53,7 +53,7 @@ const Certificate = () => {
               />
             </Document>
           </div>
-          <div className="hidden md:block lg:hidden bg-blue-400">
+          <div className="hidden md:block lg:hidden ">
             <Document
               file={Certificate?.url}
               onLoadSuccess={onDocumentLoadSuccess}
@@ -64,7 +64,7 @@ const Certificate = () => {
               />
             </Document>
           </div>
-          <div className="hidden lg:block bg-green-400">
+          <div className="hidden lg:block ">
             <Document
               file={Certificate?.url}
               onLoadSuccess={onDocumentLoadSuccess}

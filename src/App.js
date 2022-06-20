@@ -9,12 +9,14 @@ import Home from './Pages/Home/Home';
 import Certificate from './Pages/Certificate/Certificate';
 function App() {
   return (
-    <Router>
-    <Routes>
-      <Route path='/' element={<Home/>}/>
-      <Route path='/certificate' element={<Certificate/>}/>
-    </Routes>
-  </Router>
+    <>
+      <Router>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/certificate' element={<Certificate />} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 
