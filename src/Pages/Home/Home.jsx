@@ -1,16 +1,26 @@
-import React, { useContext, useEffect, useState } from 'react'
+import axios from 'axios';
+import React, { useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import header from "../../assets/images/header.png";
 import { CertificateContext } from '../../Context/Context';
 const Home = () => {
     const [token, settoken] = useState("");
   const {setCertificate} = useContext(CertificateContext);
+  const navigate = useNavigate();
   const handleClick = async()=>{
     if(token===""){
       return;
     }
 
     try {
-      
+      const {data:{data,success}} = await axios.get(`http://localhost:8083/credentials/verify/${token}`)
+      if(success){
+        setCertificate(data[0]);
+        navigate('/certificate')
+      }
+      else{
+        console.log("No Certificate Found");
+      }
     } catch (error) {
       console.log({error});
     }

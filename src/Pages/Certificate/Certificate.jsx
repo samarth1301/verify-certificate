@@ -1,8 +1,26 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
 import header from "../../assets/images/header.png";
+import { Document, Page } from 'react-pdf';
+import { CertificateContext } from '../../Context/Context';
+
+function padTo2Digits(num) {
+    return num.toString().padStart(2, '0');
+  }
+  
+  function formatDate(date) {
+    return [
+      padTo2Digits(date.getDate()),
+      padTo2Digits(date.getMonth() + 1),
+      date.getFullYear(),
+    ].join('/');
+  }
+
+  
 const Certificate = () => {
     const navigate = useNavigate();
+    const {Certificate} = useContext(CertificateContext);
+    const {student,course,batch} = Certificate;
   return (
     <>
     <div className='w-full h-fit bg-white px-10 ' >
@@ -14,7 +32,7 @@ const Certificate = () => {
              <img src={header} className='w-full ' alt="" />
           </div>
           <div className='w-full md:w-2/4'>
-          This certificate above verifies that <span className='text-blue-600 font-semibold' >Samarth Singh</span> successfully completed the <span className='text-blue-600 font-semibold'>NodeJS Training Batch Of 10 July 2021</span> on the date given on the certificate above. This certificate indicates that the entire NodeJS Training Batch Of 10 July 2021 was completed by the student.
+          This certificate above verifies that <span className='text-blue-600 font-semibold' >{student?.firstName + " " + student?.lastName } </span> successfully completed the <span className='text-blue-600 font-semibold'>{course?.name} Of {formatDate(new Date(batch?.startDate))}</span> on the date given on the certificate above. This certificate indicates that the entire {batch?.name} Of {formatDate(new Date(batch?.startDate))} was completed by the student.
           </div>
          
         </div>

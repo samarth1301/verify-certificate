@@ -12,7 +12,7 @@ function App() {
     <Router>
     <Routes>
       <Route path='/' element={<Home/>}/>
-      <Route path='/:id' element={<Certificate/>}/>
+      <Route path='/certificate' element={<Certificate/>}/>
     </Routes>
   </Router>
   );
