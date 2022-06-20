@@ -6,12 +6,13 @@ import {
   Navigate,
 } from "react-router-dom";
 import Home from './Pages/Home/Home';
+import Certificate from './Pages/Certificate/Certificate';
 function App() {
   return (
     <Router>
     <Routes>
       <Route path='/' element={<Home/>}/>
-      <Route path='/:id' element={<h1>certi here</h1>}/>
+      <Route path='/:id' element={<Certificate/>}/>
     </Routes>
   </Router>
   );
