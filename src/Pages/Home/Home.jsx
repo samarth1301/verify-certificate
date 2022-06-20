@@ -14,6 +14,7 @@ const Home = () => {
 
     try {
       const {data:{data,success}} = await axios.get(`http://localhost:8083/credentials/verify/${token}`)
+      console.log(data);
       if(success){
         setCertificate(data[0]);
         navigate('/certificate')
