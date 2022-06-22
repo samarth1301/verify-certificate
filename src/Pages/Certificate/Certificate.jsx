@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import header from "../../assets/images/header.png";
 import { Document, Page, pdfjs } from "react-pdf";
 
-import { CertificateContext } from "../../Context/Context";
+import axios from "axios";
+import Loader from "../../components/Loader";
 
 function padTo2Digits(num) {
   return num.toString().padStart(2, "0");
@@ -20,22 +21,52 @@ function formatDate(date) {
 const Certificate = () => {
   pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
   const navigate = useNavigate();
-  const { Certificate } = useContext(CertificateContext);
-  useEffect(() => {
-    if (Certificate === null) {
-      navigate("/");
-    }
-  }, []);
+  // const { Certificate } = useContext(CertificateContext);
   const [pageNumber, setPageNumber] = useState(1);
- 
+  
   /*When document gets loaded successfully*/
   function onDocumentLoadSuccess() {
     setPageNumber(1);
   }
+  
+  const {id} = useParams();
+  const [loading, setloading] = useState(false);
+  const [Certificate, setCertificate] = useState(null);
 
-  //   const { student, course, batch,url } = Certificate;
+
+
+  const getCertificate = async () => {
+   
+    setloading(true);
+    try {
+      const {
+        data: { data, success },
+      } = await axios.get(`http://localhost:8083/credentials/verify/${id}`);
+      console.log(data);
+      setloading(false);
+      if (success) {
+        setCertificate(data[0]);
+      } else {
+        console.log("No Certificate Found");
+        navigate("/");
+      }
+    } catch (error) {
+      console.log({ error });
+    }
+  };
+
+
+
+
+
+
+  useEffect(() => {
+   getCertificate();
+  }, []);
+  
   return (
     <>
+     {loading && <Loader />}
       <div className="w-full h-fit bg-white px-10 ">
         <div className="w-56 mx-auto mt-6 px-5 md:px-10">
           <img src={header} className="w-full " alt="" />
@@ -93,12 +124,14 @@ const Certificate = () => {
             by the student.
           </div>
         </div>
+        <Link to={`/`}>
         <button
           onClick={() => navigate(-1)}
           className="text-white font-semibold px-4 py-2 mt-2 md:mt-6 bg-blue-600 rounded-lg"
         >
           Go Back
         </button>
+        </Link>
       </div>
     </>
   );

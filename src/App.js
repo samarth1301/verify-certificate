@@ -13,7 +13,8 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/certificate' element={<Certificate />} />
+          <Route path="/certificate" element={<Navigate to={"/"}/>}/>
+          <Route path='/certificate/:id' element={<Certificate />} />
         </Routes>
       </Router>
     </>
